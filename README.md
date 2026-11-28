@@ -47,6 +47,16 @@ Here are some things to consider when setting key bindings:
 
 ### Command syntax
 
+Each key binding accepts a command string or an array of command strings.
+Commands in an array are called in order on one key press. For example, this
+binding marks the selected message as read and then archives it:
+
+```json
+{
+  "shift+x": ["cmd:cmd_markAsRead", "cmd:cmd_archive"]
+}
+```
+
 A few different styles of commands can be specified for key bindings.
 They are:
 
@@ -61,7 +71,7 @@ They are:
   When an `unset` keybinding is triggered, nothing happens.
   This can be useful unbinding built-in Thunderbird key bindings which you do not wish to trigger by accident.
 - **MailExtension messages**: These commands follow the format `memsg:<extensionID>:<message>` where `<extensionID>` is the ID of the Thunderbird extension to which to send a message and `<message>` is a string message to send to the extension using the `browser.runtime.sendMessage()` MailExtension API.
-  Currently, only string messages are supported because `tbkeys` stores its commands as strings, though that restriction could possibly be relaxed in the future.
+  The message must be a string.
 - <a name="eval"></a>**Eval commands**: These entries may contain arbitrary javascript code on which tbkeys will call `eval()` when the key binding is triggered.
   Any entry not matching the prefixes of the other command types is treated as an eval command.
   **NOTE:** eval commands are not available in tbkeys-lite and will function the same as unset commands instead.
